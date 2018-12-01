@@ -1,0 +1,13 @@
+
+# C extensions
+*.so
+
+__pycache__/
+*.test
+*.swp
+*.swo
+.cache
+*.pyc
+*.log
+*.DS_Store
+*.xlsx
