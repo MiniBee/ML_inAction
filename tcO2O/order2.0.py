@@ -132,17 +132,17 @@ def check_model(data, predictors):
         verbose=-1)
     model.fit(trainSub[predictors], trainSub['label'])
 
-    folder = StratifiedKFold(n_splits=3, shuffle=True)
+    # folder = StratifiedKFold(n_splits=3, shuffle=True)
+    #
+    # grid_search = GridSearchCV(
+    #     model,
+    #     cv=folder,
+    #     n_jobs=-1,
+    #     verbose=1)
+    # grid_search = grid_search.fit(data[predictors],
+    #                               data['label'])
 
-    grid_search = GridSearchCV(
-        model,
-        cv=folder,
-        n_jobs=-1,
-        verbose=1)
-    grid_search = grid_search.fit(data[predictors],
-                                  data['label'])
-
-    return grid_search
+    return model
 
 
 def user_feature(df):
