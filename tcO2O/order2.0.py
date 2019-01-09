@@ -109,7 +109,7 @@ def check_model(data, predictors):
 
     model = Pipeline(steps=[
         ('ss', StandardScaler()),
-        ('poly', PolynomialFeatures(degree=3)),
+        ('poly', PolynomialFeatures(degree=2)),
         ('en', classifier())
     ])
 
@@ -307,8 +307,8 @@ if __name__ == '__main__':
     start_time = time.time()
     pd.set_option('display.width', 1800)
     pd.set_option('display.max_columns', 40)
-    train_pd = pd.read_csv('./data/ccf_offline_stage1_train.csv')
-    # train_pd = pd.read_csv('./data/train_sample.csv')
+    # train_pd = pd.read_csv('./data/ccf_offline_stage1_train.csv')
+    train_pd = pd.read_csv('./data/train_sample.csv')
     test_pd = pd.read_csv('./data/ccf_offline_stage1_test_revised.csv')
 
     # print train_pd.head()
@@ -368,17 +368,17 @@ if __name__ == '__main__':
     trainSub, validSub = train_test_split(train_pd, test_size=0.2, stratify=train_pd['label'], random_state=100)
 
     model = check_model(trainSub, predictors)
-    validSub['pred_prob'] = model.predict_proba(validSub[predictors])[:, 1]
-    print validSub[validSub['label']==1][['label', 'pred_prob']]
-    validgroup = validSub.groupby(['Coupon_id'])
-    aucs = []
-    for i in validgroup:
-        tmpdf = i[1]
-        if len(tmpdf['label'].unique()) != 2:
-            continue
-        fpr, tpr, thresholds = roc_curve(tmpdf['label'], tmpdf['pred_prob'], pos_label=1)
-        aucs.append(auc(fpr, tpr))
-    print 'aucs: ', np.average(aucs)
+    # validSub['pred_prob'] = model.predict_proba(validSub[predictors])[:, 1]
+    # print validSub[validSub['label']==1][['label', 'pred_prob']]
+    # validgroup = validSub.groupby(['Coupon_id'])
+    # aucs = []
+    # for i in validgroup:
+    #     tmpdf = i[1]
+    #     if len(tmpdf['label'].unique()) != 2:
+    #         continue
+    #     fpr, tpr, thresholds = roc_curve(tmpdf['label'], tmpdf['pred_prob'], pos_label=1)
+    #     aucs.append(auc(fpr, tpr))
+    # print 'aucs: ', np.average(aucs)
     y_test_pred = model.predict_proba(test_pd[predictors])
     submit = test_pd[['User_id', 'Coupon_id', 'Date_received']].copy()
     submit['label'] = y_test_pred[:, 1]
