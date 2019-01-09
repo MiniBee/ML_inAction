@@ -107,12 +107,6 @@ def check_model(data, predictors):
         n_jobs=1,
         class_weight=None)
 
-    model = Pipeline(steps=[
-        ('ss', StandardScaler()),
-        ('poly', PolynomialFeatures(degree=2)),
-        ('en', classifier())
-    ])
-
     parameters = {
         'en__alpha': [0.001, 0.01, 0.1],
         'en__l1_ratio': [0.001, 0.01, 0.1]
@@ -130,19 +124,26 @@ def check_model(data, predictors):
         n_estimators=5000,
         early_stop=50,
         verbose=-1)
-    model.fit(trainSub[predictors], trainSub['label'])
 
-    # folder = StratifiedKFold(n_splits=3, shuffle=True)
-    #
-    # grid_search = GridSearchCV(
-    #     model,
-    #     cv=folder,
-    #     n_jobs=-1,
-    #     verbose=1)
-    # grid_search = grid_search.fit(data[predictors],
-    #                               data['label'])
+    model = Pipeline(steps=[
+        ('ss', StandardScaler()),
+        ('poly', PolynomialFeatures(degree=2)),
+        ('en', model)
+    ])
 
-    return model
+    model.fit(data[predictors], data['label'])
+
+    folder = StratifiedKFold(n_splits=3, shuffle=True)
+
+    grid_search = GridSearchCV(
+        model,
+        cv=folder,
+        n_jobs=-1,
+        verbose=1)
+    grid_search = grid_search.fit(data[predictors],
+                                  data['label'])
+
+    return grid_search
 
 
 def user_feature(df):
