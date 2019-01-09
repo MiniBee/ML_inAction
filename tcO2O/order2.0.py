@@ -131,15 +131,15 @@ def check_model(data, predictors):
         ('en', classifier())
     ])
 
-    # model.fit(data[predictors], data['label'])
+    model.fit(data[predictors], data['label'])
 
-    folder = StratifiedKFold(n_splits=3, shuffle=True)
+    # folder = StratifiedKFold(n_splits=3, shuffle=True)
+    #
+    # grid_search = GridSearchCV(model, cv=folder)
+    # grid_search = grid_search.fit(data[predictors],
+    #                               data['label'])
 
-    grid_search = GridSearchCV(model, cv=folder)
-    grid_search = grid_search.fit(data[predictors],
-                                  data['label'])
-
-    return grid_search
+    return model
 
 
 def user_feature(df):
