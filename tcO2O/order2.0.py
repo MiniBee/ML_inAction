@@ -131,6 +131,8 @@ def check_model(data, predictors):
         ('en', classifier())
     ])
 
+    print data.head()
+
     model.fit(data[predictors], data['label'])
 
     # folder = StratifiedKFold(n_splits=3, shuffle=True)
