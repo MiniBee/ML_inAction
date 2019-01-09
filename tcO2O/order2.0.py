@@ -135,10 +135,7 @@ def check_model(data, predictors):
 
     folder = StratifiedKFold(n_splits=3, shuffle=True)
 
-    grid_search = GridSearchCV(
-        model,
-        cv=folder
-        )
+    grid_search = GridSearchCV(model, cv=folder)
     grid_search = grid_search.fit(data[predictors],
                                   data['label'])
 
