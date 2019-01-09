@@ -14,7 +14,7 @@ from sklearn.model_selection import StratifiedKFold, GridSearchCV, train_test_sp
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 
-# import lightgbm as lgb
+import lightgbm as lgb
 
 import util
 import datetime
@@ -118,11 +118,24 @@ def check_model(data, predictors):
         'en__l1_ratio': [0.001, 0.01, 0.1]
     }
 
+    model = lgb.LGBMClassifier(
+        learning_rate=0.01,
+        boosting_type='gbdt',
+        objective='binary',
+        metric='logloss',
+        max_depth=5,
+        sub_feature=0.7,
+        num_leaves=3,
+        colsample_bytree=0.7,
+        n_estimators=5000,
+        early_stop=50,
+        verbose=-1)
+    model.fit(trainSub[predictors], trainSub['label'])
+
     folder = StratifiedKFold(n_splits=3, shuffle=True)
 
     grid_search = GridSearchCV(
         model,
-        parameters,
         cv=folder,
         n_jobs=-1,
         verbose=1)
