@@ -131,7 +131,7 @@ def check_model(data, predictors):
         ('en', classifier())
     ])
 
-    print data.head()
+    print '-------------', data[predictors].head()
 
     model.fit(data[predictors], data['label'])
 
