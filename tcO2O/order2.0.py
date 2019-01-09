@@ -116,7 +116,7 @@ def check_model(data, predictors):
         learning_rate=0.01,
         boosting_type='gbdt',
         objective='binary',
-        metric='logloss',
+        metric='multi_logloss',
         max_depth=5,
         sub_feature=0.7,
         num_leaves=3,
@@ -130,7 +130,7 @@ def check_model(data, predictors):
         ('en', classifier())
     ])
 
-    print '-------------', data[predictors].head()
+    print '-------------', data['label'].head()
 
     model.fit(data[predictors], data['label'])
 
