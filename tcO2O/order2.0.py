@@ -122,7 +122,6 @@ def check_model(data, predictors):
         num_leaves=3,
         colsample_bytree=0.7,
         n_estimators=5000,
-        early_stop=50,
         verbose=-1)
 
     model = Pipeline(steps=[
