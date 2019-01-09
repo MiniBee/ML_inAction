@@ -130,7 +130,7 @@ def check_model(data, predictors):
         ('en', classifier())
     ])
 
-    print '-------------', data['label'].groupby(['label']).count()
+    print '-------------', data.groupby(['label']).count()
 
     model.fit(data[predictors], data['label'])
 
