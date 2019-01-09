@@ -318,8 +318,8 @@ if __name__ == '__main__':
     start_time = time.time()
     pd.set_option('display.width', 1800)
     pd.set_option('display.max_columns', 40)
-    # train_pd = pd.read_csv('./data/ccf_offline_stage1_train.csv')
-    train_pd = pd.read_csv('./data/train_sample.csv')
+    train_pd = pd.read_csv('./data/ccf_offline_stage1_train.csv')
+    # train_pd = pd.read_csv('./data/train_sample.csv')
     test_pd = pd.read_csv('./data/ccf_offline_stage1_test_revised.csv')
 
     # print train_pd.head()
