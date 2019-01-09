@@ -112,7 +112,7 @@ def check_model(data, predictors):
         'en__l1_ratio': [0.001, 0.01, 0.1]
     }
 
-    model = lgb.LGBMClassifier(
+    classifier = lambda: lgb.LGBMClassifier(
         learning_rate=0.01,
         boosting_type='gbdt',
         objective='binary',
@@ -128,10 +128,10 @@ def check_model(data, predictors):
     model = Pipeline(steps=[
         ('ss', StandardScaler()),
         ('poly', PolynomialFeatures(degree=2)),
-        ('en', model)
+        ('en', classifier())
     ])
 
-    model.fit(data[predictors], data['label'])
+    # model.fit(data[predictors], data['label'])
 
     folder = StratifiedKFold(n_splits=3, shuffle=True)
 
