@@ -137,9 +137,8 @@ def check_model(data, predictors):
 
     grid_search = GridSearchCV(
         model,
-        cv=folder,
-        n_jobs=-1,
-        verbose=1)
+        cv=folder
+        )
     grid_search = grid_search.fit(data[predictors],
                                   data['label'])
 
